@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package juegocomida;
 
 import javafx.application.Application;
@@ -32,10 +27,8 @@ public class JuegoComida extends Application{
         stage.setScene(scene);
         stage.getIcons().add(new Image("recursos/Logo-Cooking.png"));
         stage.setTitle("Cooking Craze");
+        stage.setResizable(false);
         stage.show();
     }
     
-    public static void cambiarScene(Stage stage, Scene scene){
-        stage.setScene(scene);
-    }
 }

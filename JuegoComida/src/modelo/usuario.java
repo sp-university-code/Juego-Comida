@@ -11,7 +11,7 @@ package modelo;
  */
 public class usuario {
     private String nUsuario;
-    private int nivel;
-    private double total;
+    private int nivel=1;
+    private int score;
     
 }
