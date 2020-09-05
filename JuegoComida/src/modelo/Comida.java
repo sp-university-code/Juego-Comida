@@ -5,6 +5,9 @@
  */
 package modelo;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
 /**
  *
  * @author Jorge
@@ -12,12 +15,12 @@ package modelo;
 public class Comida {
     private String nombre;
     private String nombreArchivo;
-    private String nombreCarpeta;
-
-    public Comida(String nombre, String nombreArchivo, String nombreCarpeta) {
+    //private String nombreCarpeta;
+    private static HashMap<Integer, HashMap<String,ArrayList<Comida>>> nivelesComida = new HashMap<>();
+    
+    public Comida(String nombre, String nombreArchivo) {
         this.nombre = nombre;
         this.nombreArchivo = nombreArchivo;
-        this.nombreCarpeta = nombreCarpeta;
     }
 
     public String getNombre() {
@@ -36,18 +39,24 @@ public class Comida {
         this.nombreArchivo = nombreArchivo;
     }
 
-    public String getNombreCarpeta() {
-        return nombreCarpeta;
+    public static HashMap<Integer, HashMap<String, ArrayList<Comida>>> getNivelesComida() {
+        return nivelesComida;
     }
 
-    public void setNombreCarpeta(String nombreCarpeta) {
-        this.nombreCarpeta = nombreCarpeta;
+    public static void setNivelesComida(HashMap<Integer, HashMap<String, ArrayList<Comida>>> nivelesComida) {
+        Comida.nivelesComida = nivelesComida;
     }
+
+    
 
     @Override
     public String toString() {
-        return "Comida{" + "nombre=" + nombre + ", nombreArchivo=" + nombreArchivo + ", nombreCarpeta=" + nombreCarpeta + '}';
+        return "Comida{" + "nombre=" + nombre + ", nombreArchivo=" + nombreArchivo + '}';
     }
+    
+    
+    
+    
     
     
     
