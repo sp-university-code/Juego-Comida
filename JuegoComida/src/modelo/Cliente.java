@@ -9,10 +9,12 @@ import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Platform;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 
 /**
@@ -21,7 +23,7 @@ import javafx.scene.layout.VBox;
  */
 public class Cliente implements Runnable{
     private VBox cuadroCliente = new VBox();
-    private HBox hBxClientela;
+    private Pane paneClientela;
     private HBox hComida = new HBox();
     private ImageView imagenCliente = new ImageView("/recursos/cliente.jpg");
     private int paciencia = generarPaciencia();
@@ -29,17 +31,21 @@ public class Cliente implements Runnable{
     private Button servir = new Button("Servir");
     
 
-    public Cliente(HBox hBxClientela) {
-        this.hBxClientela = hBxClientela;
-        imagenCliente.setFitWidth(30);
-        imagenCliente.setFitWidth(30);
+    public Cliente(Pane paneClientela) {
+        this.paneClientela = paneClientela;
+        imagenCliente.setFitWidth(150);
+        imagenCliente.setFitHeight(150);
+        cuadroCliente.setSpacing(3);
+        cuadroCliente.setAlignment(Pos.CENTER);
         cuadroCliente.getChildren().addAll(hComida,imagenCliente,lblPaciencia,servir);
+        cuadroCliente.setLayoutX(getX());
+        cuadroCliente.setLayoutY(200);
         servir.setOnMouseClicked(e -> removerCliente());
         
     }
     
     public void removerCliente(){
-        this.hBxClientela.getChildren().remove(this.cuadroCliente);
+        this.paneClientela.getChildren().remove(this.cuadroCliente);
         System.out.println("Cliente se fue");
     }
     
@@ -63,7 +69,11 @@ public class Cliente implements Runnable{
  
     public int generarPaciencia(){
         Random r = new Random();
-        return r.nextInt(6-3)+3;
+        return r.nextInt(8-3)+3;
     }
     
+    public  int getX(){
+        Random r = new Random();
+        return r.nextInt(300)+20;
+    }
 }

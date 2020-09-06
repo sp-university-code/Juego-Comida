@@ -14,6 +14,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import juegocomida.JuegoComida;
 import modelo.Comida;
@@ -33,18 +34,18 @@ public class VistaJuegoController implements Initializable {
     @FXML
     private VBox vBxMenu;
     @FXML
-    private HBox hBxClientela;
-    @FXML
     private VBox vBxCocinando;
     @FXML
     private Label lblCocinando;
+    @FXML
+    private Pane paneClientela;
 
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        Thread gc = new Thread(new generadorCliente(hBxClientela));
+        Thread gc = new Thread(new generadorCliente(paneClientela));
         gc.start();
         for(String categoria:Comida.getCategoriaComida().keySet()){
             HBox Hcategoria = new HBox();

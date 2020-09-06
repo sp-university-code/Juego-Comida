@@ -47,7 +47,6 @@ public class JuegoComida extends Application{
     }
     
     public static void terminarRun(){
-            System.out.println("Se terminara");
             System.exit(0);
     }
     

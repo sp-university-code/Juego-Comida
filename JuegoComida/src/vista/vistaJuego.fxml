@@ -57,6 +57,6 @@
          </BorderPane.margin></VBox>
    </bottom>
    <center>
-      <HBox fx:id="hBxClientela" prefHeight="489.0" prefWidth="1247.0" BorderPane.alignment="CENTER" />
+      <Pane fx:id="paneClientela" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
    </center>
 </BorderPane>
