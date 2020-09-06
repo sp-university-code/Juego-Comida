@@ -9,6 +9,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -47,6 +48,7 @@ public class VistaJuegoController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         Thread gc = new Thread(new generadorCliente(paneClientela));
         gc.start();
+        
         for(String categoria:Comida.getCategoriaComida().keySet()){
             HBox Hcategoria = new HBox();
             Hcategoria.setSpacing(8);
@@ -65,6 +67,7 @@ public class VistaJuegoController implements Initializable {
                     
                 }
             }
+            Hcategoria.setAlignment(Pos.CENTER);
             vBxMenu.getChildren().addAll(nombreCategoria,Hcategoria);
         }
         
