@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.*?>
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" styleClass="bodyBackground" stylesheets="@../diseno/vistaingreso.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controlador.VistaIngresoController">
+   <center>
+      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="1.0" BorderPane.alignment="CENTER">
+         <children>
+            <ImageView fitHeight="260.0" fitWidth="373.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../recursos/Logo-Cooking.png" />
+               </image>
+            </ImageView>
+         </children>
+      </HBox>
+   </center>
+   <bottom>
+      <VBox alignment="CENTER" prefHeight="132.0" prefWidth="600.0" spacing="5.0" styleClass="buttondiseno" stylesheets="@../diseno/vistaingreso.css" BorderPane.alignment="CENTER">
+         <children>
+            <HBox alignment="CENTER" prefHeight="38.0" prefWidth="600.0" spacing="15.0">
+               <children>
+                  <Label text="Usuario:" textOverrun="CLIP">
+                     <font>
+                        <Font name="Berlin Sans FB" size="23.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="DEFAULT" />
+                     </cursor>
+                  </Label>
+                  <TextField fx:id="txtUsuario">
+                     <cursor>
+                        <Cursor fx:constant="TEXT" />
+                     </cursor>
+                  </TextField>
+               </children>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+               <padding>
+                  <Insets right="15.0" />
+               </padding>
+            </HBox>
+            <Button fx:id="btnJugar" contentDisplay="CENTER" mnemonicParsing="false" onAction="#iniciarJuego" prefHeight="41.0" prefWidth="150.0" style="-fx-background-radius: 35; -fx-background-insets: 2; -fx-background-color: #81e000; -fx-border-width: 3; -fx-border-radius: 30; -fx-border-color: #00790a;" stylesheets="@../diseno/vistaingreso.css" text="Jugar" textFill="WHITE">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+               <font>
+                  <Font name="Berlin Sans FB" size="36.0" />
+               </font>
+            </Button>
+         </children>
+      </VBox>
+   </bottom>
+</BorderPane>
