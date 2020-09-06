@@ -15,17 +15,21 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import modelo.Comida;
+import modelo.Usuario;
 
 /**
  *
  * @author Jorge
  */
 public class JuegoComida extends Application{
-
+    public static Usuario usuarioActual;
+    public static boolean salirPrograma = false;
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
+    public static void main(String[] args){ 
+        usuarioActual=new Usuario("jazch");
+        usuarioActual.setNivel(3);
         leerAchivo();
         launch();
     }
@@ -39,6 +43,12 @@ public class JuegoComida extends Application{
         stage.setTitle("Cooking Craze");
         stage.setResizable(false);
         stage.show();
+        stage.setOnCloseRequest(e -> terminarRun());
+    }
+    
+    public static void terminarRun(){
+            System.out.println("Se terminara");
+            System.exit(0);
     }
     
     public static void leerAchivo(){
@@ -48,11 +58,11 @@ public class JuegoComida extends Application{
             for(String linea:lineas){
                 String[] separacion = linea.split(",");
                 Comida c = new Comida(separacion[2],separacion[0]);
-                Comida.getNivelesComida().putIfAbsent(Integer.parseInt(separacion[3]), new HashMap<String, ArrayList<Comida>>());
-                Comida.getNivelesComida().get(Integer.parseInt(separacion[3])).putIfAbsent(separacion[1], new ArrayList<Comida>());
-                Comida.getNivelesComida().get(Integer.parseInt(separacion[3])).get(separacion[1]).add(c);
+                Comida.getCategoriaComida().putIfAbsent(separacion[1], new HashMap<Integer, ArrayList<Comida>>());
+                Comida.getCategoriaComida().get(separacion[1]).putIfAbsent(Integer.parseInt(separacion[3]), new ArrayList<Comida>());
+                Comida.getCategoriaComida().get(separacion[1]).get(Integer.parseInt(separacion[3])).add(c);
             }
-            System.out.println(Comida.getNivelesComida());
+            System.out.println(Comida.getCategoriaComida());
         } catch (IOException ex) {
             Logger.getLogger(JuegoComida.class.getName()).log(Level.SEVERE, null, ex);
         }

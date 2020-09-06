@@ -30,6 +30,7 @@ public class VistaIngresoController implements Initializable {
     private TextField txtUsuario;
     @FXML
     private Button btnJugar;
+    public static boolean salir = false;
 
     /**
      * Initializes the controller class.
@@ -56,6 +57,7 @@ public class VistaIngresoController implements Initializable {
                 stage.setMaximized(true);
                 stage.setResizable(false);
                 stage.showAndWait();
+                stage.setOnCloseRequest(e -> salir=true);
             } catch (IOException ex) {
                 Logger.getLogger(VistaIngresoController.class.getName()).log(Level.SEVERE, null, ex);
             }

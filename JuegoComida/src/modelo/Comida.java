@@ -16,7 +16,7 @@ public class Comida {
     private String nombre;
     private String nombreArchivo;
     //private String nombreCarpeta;
-    private static HashMap<Integer, HashMap<String,ArrayList<Comida>>> nivelesComida = new HashMap<>();
+    private static HashMap<String, HashMap<Integer,ArrayList<Comida>>> categoriaComida = new HashMap<>();
     
     public Comida(String nombre, String nombreArchivo) {
         this.nombre = nombre;
@@ -39,16 +39,14 @@ public class Comida {
         this.nombreArchivo = nombreArchivo;
     }
 
-    public static HashMap<Integer, HashMap<String, ArrayList<Comida>>> getNivelesComida() {
-        return nivelesComida;
+    public static HashMap<String, HashMap<Integer, ArrayList<Comida>>> getCategoriaComida() {
+        return categoriaComida;
     }
 
-    public static void setNivelesComida(HashMap<Integer, HashMap<String, ArrayList<Comida>>> nivelesComida) {
-        Comida.nivelesComida = nivelesComida;
+    public static void setCategoriaComida(HashMap<String, HashMap<Integer, ArrayList<Comida>>> categoriaComida) {
+        Comida.categoriaComida = categoriaComida;
     }
-
     
-
     @Override
     public String toString() {
         return "Comida{" + "nombre=" + nombre + ", nombreArchivo=" + nombreArchivo + '}';

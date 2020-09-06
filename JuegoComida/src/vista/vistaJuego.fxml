@@ -10,10 +10,14 @@
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1366.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controlador.VistaJuegoController">
    <right>
-      <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+      <VBox prefHeight="490.0" prefWidth="114.0" BorderPane.alignment="CENTER">
          <children>
             <Label fx:id="lblCocinando" alignment="CENTER" contentDisplay="RIGHT" prefHeight="17.0" prefWidth="104.0" text="Cocinando..." />
-            <VBox fx:id="vBxCocinando" prefHeight="200.0" prefWidth="100.0" />
+            <ScrollPane prefHeight="485.0" prefWidth="114.0">
+               <content>
+                  <VBox fx:id="vBxCocinando" prefHeight="469.0" prefWidth="112.0" style="-fx-background-color: #FFFFFF;" />
+               </content>
+            </ScrollPane>
          </children>
       </VBox>
    </right>
@@ -47,9 +51,12 @@
       </VBox>
    </top>
    <bottom>
-      <VBox fx:id="vBxMenu" prefHeight="152.0" prefWidth="600.0" BorderPane.alignment="CENTER" />
+      <VBox fx:id="vBxMenu" alignment="TOP_CENTER" prefHeight="152.0" prefWidth="600.0" spacing="4.0" BorderPane.alignment="CENTER">
+         <BorderPane.margin>
+            <Insets bottom="15.0" left="10.0" />
+         </BorderPane.margin></VBox>
    </bottom>
    <center>
-      <HBox fx:id="hBxClientela" prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+      <HBox fx:id="hBxClientela" prefHeight="489.0" prefWidth="1247.0" BorderPane.alignment="CENTER" />
    </center>
 </BorderPane>
