@@ -1,13 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package modelo;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Objects;
 
 /**
@@ -17,7 +11,6 @@ import java.util.Objects;
 public class Comida {
     private String nombre;
     private String nombreArchivo;
-    //private String nombreCarpeta;
     private static HashMap<String, HashMap<Integer,ArrayList<Comida>>> categoriaComida = new HashMap<>();
     
     public Comida(String nombre, String nombreArchivo) {

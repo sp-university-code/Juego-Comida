@@ -1,6 +1,7 @@
 package controlador;
 
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -10,11 +11,11 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import juegocomida.JuegoComida;
+import java.util.ArrayList;
+import modelo.Cliente;
 import modelo.Comida;
-import modelo.Usuario;
 
 /**
  * FXML Controller class
@@ -22,7 +23,6 @@ import modelo.Usuario;
  * @author Jorge
  */
 public class VistaJuegoController implements Initializable {
-
     @FXML
     private Label lblNivel;
     @FXML
@@ -35,6 +35,8 @@ public class VistaJuegoController implements Initializable {
     private Label lblCocinando;
     @FXML
     private HBox hBxClientela;
+    
+    private static List<Comida> comidaCocinada = new ArrayList<>();
 
     /**
      * Initializes the controller class.
@@ -44,6 +46,15 @@ public class VistaJuegoController implements Initializable {
         Thread gc = new Thread(new generadorCliente(hBxClientela));
         gc.start();
         vBxCocinando.setAlignment(Pos.CENTER);
+        cargarBotonesComida();
+        
+    } 
+
+    public static List<Comida> getComidaCocinada() {
+        return comidaCocinada;
+    }
+    
+    public void cargarBotonesComida(){
         for(String categoria:Comida.getCategoriaComida().keySet()){
             HBox Hcategoria = new HBox();
             Hcategoria.setSpacing(8);
@@ -65,10 +76,10 @@ public class VistaJuegoController implements Initializable {
             Hcategoria.setAlignment(Pos.CENTER);
             vBxMenu.getChildren().addAll(nombreCategoria,Hcategoria);
         }
-        
-    }    
+    }
     
     public void cocinar(String categoria, Comida comida){
+        comidaCocinada.add(comida);
         ImageView imagenComida = new ImageView(new Image("/recursos/"+categoria+"/"+comida.getNombreArchivo()));
         imagenComida.setFitHeight(60);
         imagenComida.setFitWidth(60);
@@ -79,6 +90,7 @@ public class VistaJuegoController implements Initializable {
     }
     
     public void comidaSeleccionada(Label lbl){
+        
         lbl.setStyle("-fx-border-color:blue;");
     }
 }

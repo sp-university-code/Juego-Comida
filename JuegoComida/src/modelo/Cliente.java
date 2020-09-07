@@ -1,10 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package modelo;
 
+import controlador.VistaIngresoController;
+import controlador.VistaJuegoController;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -13,12 +10,12 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Platform;
 import javafx.geometry.Pos;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import juegocomida.JuegoComida;
 
@@ -36,8 +33,7 @@ public class Cliente implements Runnable{
     private Button servir = new Button("Servir");
     private static HashMap<Comida, ImageView> pedidosCliente = new HashMap<>();
     private List<Comida> comidaPedidos = new ArrayList<>();
-    private List<Comida> comidaPedidosReal = new ArrayList<>();
-    private static List<Comida> comidaCocinada = new ArrayList<>();
+    private List<Comida> comidaCocinada = new ArrayList<>();
     
 
     public Cliente(HBox hBxClientela) {
@@ -48,12 +44,41 @@ public class Cliente implements Runnable{
         cuadroCliente.setAlignment(Pos.CENTER);
         hComida.setSpacing(3);
         llenarPedidos();
-        //cuadroCliente.getChildren().add(hComida);
         cuadroCliente.getChildren().addAll(hComida,imagenCliente,lblPaciencia,servir);
-        cuadroCliente.setLayoutX(getX());
-        cuadroCliente.setLayoutY(200);
-        servir.setOnMouseClicked(e -> removerCliente());
+        servir.setOnMouseClicked(e -> servir());
         
+    }
+    
+    public void servir(){
+        System.out.println(VistaJuegoController.getComidaCocinada());
+        System.out.println(comidaPedidos);
+        comidaCocinada=VistaJuegoController.getComidaCocinada();
+        System.out.println(comidaCocinada);
+        if(compararComidas()){
+            VistaIngresoController.mostrarAlerta("", "ClienteComplacido", Alert.AlertType.INFORMATION);
+        }
+        VistaJuegoController.getComidaCocinada().clear();
+        System.out.println("Se vacio lista: "+VistaJuegoController.getComidaCocinada());
+    }
+    
+    public boolean compararComidas(){
+        if(comidaCocinada.size()!= comidaPedidos.size()){
+            System.out.println("comidaCocinada :"+comidaCocinada.size());
+            System.out.println("comidaPedidos :"+comidaPedidos.size());
+            System.out.println(comidaCocinada.size()!= comidaPedidos.size());
+            System.out.println(comidaCocinada.size()!= comidaPedidos.size());
+            
+            System.out.println("Hola1");
+            return false;
+        }
+        for(Comida c:comidaCocinada){
+            if(!comidaPedidos.contains(c)){
+                System.out.println("Hola2");
+                return false;
+            }
+                
+        }
+        return true;
     }
     
     public void removerCliente(){
@@ -78,15 +103,14 @@ public class Cliente implements Runnable{
     public VBox getCuadroCliente() {
         return cuadroCliente;
     }
- 
-    public int generarPaciencia(){
-        Random r = new Random();
-        return r.nextInt(8-3)+3;
+
+    public List<Comida> getComidaCocinada() {
+        return comidaCocinada;
     }
     
-    public  int getX(){
+    public int generarPaciencia(){
         Random r = new Random();
-        return r.nextInt(300)+20;
+        return r.nextInt(12-3)+3;
     }
     
     public void generarComida(){
@@ -112,17 +136,20 @@ public class Cliente implements Runnable{
     
     public void llenarPedidos(){
         generarComida();
+        List<Comida> comidas = new ArrayList<>();
         for(Comida comida:pedidosCliente.keySet()){
-            comidaPedidos.add(comida);
+            comidas.add(comida);
         }
         for(int i=0; i<generarAleatorio(4,1);i++){
-            int indice = generarAleatorio(comidaPedidos.size(),0);
-             comidaPedidosReal.add(comidaPedidos.get(indice));
+            int indice = generarAleatorio(comidas.size(),0);
+             comidaPedidos.add(comidas.get(indice));
              Label lbl =new Label();
-             ImageView imagen = pedidosCliente.get(comidaPedidos.get(indice));
+             ImageView imagen = pedidosCliente.get(comidas.get(indice));
              lbl.setGraphic(imagen);
              hComida.getChildren().add(lbl);
             
         }
     }
+    
+    
 }
