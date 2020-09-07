@@ -7,6 +7,8 @@ package modelo;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Objects;
 
 /**
  *
@@ -46,6 +48,26 @@ public class Comida {
     public static void setCategoriaComida(HashMap<String, HashMap<Integer, ArrayList<Comida>>> categoriaComida) {
         Comida.categoriaComida = categoriaComida;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Comida other = (Comida) obj;
+        if (!Objects.equals(this.nombre, other.nombre)) {
+            return false;
+        }
+        return true;
+    }
+    
+    
     
     @Override
     public String toString() {

@@ -17,11 +17,13 @@ import modelo.Cliente;
  * @author Jorge
  */
 public class generadorCliente implements Runnable{
-    private Pane paneClientela;
+    private HBox hBxClientela;
 
-    public generadorCliente(Pane paneClientela) {
-        this.paneClientela = paneClientela;
+    public generadorCliente(HBox hBxClientela) {
+        this.hBxClientela = hBxClientela;
     }
+
+    
 
 
     @Override
@@ -29,11 +31,11 @@ public class generadorCliente implements Runnable{
         while(!VistaIngresoController.salir){
             
             try {
-                Cliente cliente = new Cliente(paneClientela);
+                Cliente cliente = new Cliente(hBxClientela);
                 Thread c = new Thread(cliente);
                 c.start();
-                Platform.runLater(()->paneClientela.getChildren().add(cliente.getCuadroCliente()));
-                Thread.sleep(3000);
+                Platform.runLater(()->hBxClientela.getChildren().add(cliente.getCuadroCliente()));
+                Thread.sleep(2500);
             } catch (InterruptedException ex) {
                 Logger.getLogger(generadorCliente.class.getName()).log(Level.SEVERE, null, ex);
             }
