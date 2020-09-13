@@ -34,10 +34,20 @@ public class Cliente implements Runnable{
     private static HashMap<Comida, ImageView> pedidosCliente = new HashMap<>();
     private List<Comida> comidaPedidos = new ArrayList<>();
     private List<Comida> comidaCocinada = new ArrayList<>();
+    private Label lblNivel;
+    private Label lblVida;
+    private Label lblScore;
+    private VBox vBxMenu;
+    private VBox vBxCocinando;
     
 
-    public Cliente(HBox hBxClientela) {
+    public Cliente(HBox hBxClientela, Label lblNivel, Label lblVida, Label lblScore, VBox vBxMenu, VBox vBxCocinando) {
         this.hBxClientela = hBxClientela;
+        this.lblNivel = lblNivel;
+        this.lblVida = lblVida;
+        this.lblScore = lblScore;
+        this.vBxMenu=vBxMenu;
+        this.vBxCocinando=vBxCocinando;
         imagenCliente.setFitWidth(100);
         imagenCliente.setFitHeight(100);
         cuadroCliente.setSpacing(3);
@@ -50,24 +60,55 @@ public class Cliente implements Runnable{
     }
     
     public void servir(){
-        System.out.println(VistaJuegoController.getComidaCocinada());
-        System.out.println(comidaPedidos);
         comidaCocinada=VistaJuegoController.getComidaCocinada();
-        System.out.println(comidaCocinada);
+        vBxCocinando.getChildren().clear();
         if(compararComidas()){
-            VistaIngresoController.mostrarAlerta("", "ClienteComplacido", Alert.AlertType.INFORMATION);
+            JuegoComida.usuarioActual.subirScore();
+            lblScore.setText(JuegoComida.usuarioActual.getScore()+"");
+            removerCliente();
+            if(JuegoComida.usuarioActual.getScore()==400 || JuegoComida.usuarioActual.getScore()==800){
+                JuegoComida.usuarioActual.subirNivel();
+                vBxMenu.getChildren().clear();
+                new VistaJuegoController().cargarBotonesComida(vBxMenu,vBxCocinando);
+                VistaIngresoController.mostrarAlerta("Level Up","Felicitaciones, ha alcanzado el nivel "+JuegoComida.usuarioActual.getNivel(), Alert.AlertType.INFORMATION);
+            }
+            if(JuegoComida.usuarioActual.getScore()==1200){
+                reiniciarUsuario();
+                VistaIngresoController.mostrarAlerta("","Felicitaciones, Ganaste!!", Alert.AlertType.INFORMATION);
+                reiniciarPantalla();
+            }
+        }
+        else{
+            JuegoComida.usuarioActual.pederVida();
+            lblVida.setText(JuegoComida.usuarioActual.getVida()+"");
+            if(JuegoComida.usuarioActual.getVida()<=0){
+                reiniciarUsuario();
+                VistaIngresoController.mostrarAlerta("Game Over","Lo sentimos, perdiste", Alert.AlertType.INFORMATION);
+                reiniciarPantalla();
+            }
         }
         VistaJuegoController.getComidaCocinada().clear();
         System.out.println("Se vacio lista: "+VistaJuegoController.getComidaCocinada());
     }
     
+    public void reiniciarUsuario(){
+        JuegoComida.usuarioActual.setVida(5);
+        JuegoComida.usuarioActual.setNivel(1);
+        JuegoComida.usuarioActual.setScore(0);
+    }
+    public void reiniciarPantalla(){
+        vBxMenu.getChildren().clear();
+        new VistaJuegoController().cargarBotonesComida(vBxMenu,vBxCocinando);
+        hComida.getChildren().clear();
+        pedidosCliente.clear();
+        comidaPedidos.clear();
+        llenarPedidos();
+        lblVida.setText(JuegoComida.usuarioActual.getVida()+"");
+        lblNivel.setText(JuegoComida.usuarioActual.getNivel()+"");
+        lblScore.setText(JuegoComida.usuarioActual.getScore()+"");
+    }
     public boolean compararComidas(){
-        if(comidaCocinada.size()!= comidaPedidos.size()){
-            System.out.println("comidaCocinada :"+comidaCocinada.size());
-            System.out.println("comidaPedidos :"+comidaPedidos.size());
-            System.out.println(comidaCocinada.size()!= comidaPedidos.size());
-            System.out.println(comidaCocinada.size()!= comidaPedidos.size());
-            
+        if(comidaCocinada.size()!= comidaPedidos.size()){      
             System.out.println("Hola1");
             return false;
         }
@@ -110,17 +151,18 @@ public class Cliente implements Runnable{
     
     public int generarPaciencia(){
         Random r = new Random();
-        return r.nextInt(12-3)+3;
+        return r.nextInt(17-3)+3;
     }
     
     public void generarComida(){
         for(String categoria:Comida.getCategoriaComida().keySet()){
             for(int nivel : Comida.getCategoriaComida().get(categoria).keySet()){
                 if(nivel <= JuegoComida.usuarioActual.getNivel()){
+                    System.out.println(nivel+" "+JuegoComida.usuarioActual.getNivel());
                     for(Comida comida:Comida.getCategoriaComida().get(categoria).get(nivel)){
                         ImageView imagenComida = new ImageView(new Image("/recursos/"+categoria+"/"+comida.getNombreArchivo()));
-                        imagenComida.setFitHeight(60);
-                        imagenComida.setFitWidth(60);
+                        imagenComida.setFitHeight(55);
+                        imagenComida.setFitWidth(55);
                         pedidosCliente.putIfAbsent(comida, imagenComida);
                     }
                     
@@ -135,6 +177,7 @@ public class Cliente implements Runnable{
     }
     
     public void llenarPedidos(){
+        hComida.getChildren().clear();
         generarComida();
         List<Comida> comidas = new ArrayList<>();
         for(Comida comida:pedidosCliente.keySet()){
@@ -147,9 +190,6 @@ public class Cliente implements Runnable{
              ImageView imagen = pedidosCliente.get(comidas.get(indice));
              lbl.setGraphic(imagen);
              hComida.getChildren().add(lbl);
-            
         }
     }
-    
-    
 }

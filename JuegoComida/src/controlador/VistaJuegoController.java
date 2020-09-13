@@ -26,8 +26,6 @@ public class VistaJuegoController implements Initializable {
     @FXML
     private Label lblNivel;
     @FXML
-    private Label lblTotal;
-    @FXML
     private VBox vBxMenu;
     @FXML
     private VBox vBxCocinando;
@@ -37,16 +35,27 @@ public class VistaJuegoController implements Initializable {
     private HBox hBxClientela;
     
     private static List<Comida> comidaCocinada = new ArrayList<>();
+    @FXML
+    private Label lblVida;
+    @FXML
+    private Label lblScore;
 
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        Thread gc = new Thread(new generadorCliente(hBxClientela));
+        Thread gc = new Thread(new generadorCliente(hBxClientela,lblNivel,lblVida,lblScore,vBxMenu,vBxCocinando));
         gc.start();
+        lblNivel.setText(JuegoComida.usuarioActual.getNivel()+"");
+        lblVida.setText(JuegoComida.usuarioActual.getVida()+"");
+        lblScore.setText(JuegoComida.usuarioActual.getScore()+"");
+        
+        
+        
         vBxCocinando.setAlignment(Pos.CENTER);
-        cargarBotonesComida();
+        lblNivel.setText(JuegoComida.usuarioActual.getNivel()+"");
+        cargarBotonesComida(vBxMenu,vBxCocinando);
         
     } 
 
@@ -54,7 +63,7 @@ public class VistaJuegoController implements Initializable {
         return comidaCocinada;
     }
     
-    public void cargarBotonesComida(){
+    public void cargarBotonesComida(VBox Menu,VBox cocinando){
         for(String categoria:Comida.getCategoriaComida().keySet()){
             HBox Hcategoria = new HBox();
             Hcategoria.setSpacing(8);
@@ -67,30 +76,26 @@ public class VistaJuegoController implements Initializable {
                         imagenComida.setFitWidth(60);
                         Button b = new Button("",imagenComida);
                         b.setStyle("-fx-pref-height:120px; -fx-pref-width:105px; -fx-base:coral; -fx-border-radius:30; -fx-background-radius:30; -fx-body-shadow-highlight-color:f0f0f0;");
-                        b.setOnAction(e -> cocinar(categoria, comida));
+                        b.setOnAction(e -> cocinar(categoria, comida, cocinando));
                         Hcategoria.getChildren().add(b);
                     }
                     
                 }
             }
             Hcategoria.setAlignment(Pos.CENTER);
-            vBxMenu.getChildren().addAll(nombreCategoria,Hcategoria);
+            Menu.getChildren().addAll(nombreCategoria,Hcategoria);
         }
     }
     
-    public void cocinar(String categoria, Comida comida){
+    public void cocinar(String categoria, Comida comida,VBox cocinando){
         comidaCocinada.add(comida);
         ImageView imagenComida = new ImageView(new Image("/recursos/"+categoria+"/"+comida.getNombreArchivo()));
         imagenComida.setFitHeight(60);
         imagenComida.setFitWidth(60);
         Label lblComida = new Label();
         lblComida.setGraphic(imagenComida);
-        lblComida.setOnMouseClicked(e->comidaSeleccionada(lblComida));
-        vBxCocinando.getChildren().add(lblComida);
-    }
-    
-    public void comidaSeleccionada(Label lbl){
         
-        lbl.setStyle("-fx-border-color:blue;");
+        cocinando.getChildren().add(lblComida);
     }
+  
 }

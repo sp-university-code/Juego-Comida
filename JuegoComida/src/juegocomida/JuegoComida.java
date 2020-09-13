@@ -23,13 +23,12 @@ import modelo.Usuario;
  */
 public class JuegoComida extends Application{
     public static Usuario usuarioActual;
-    public static boolean salirPrograma = false;
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args){ 
         usuarioActual=new Usuario("jazch");
-        usuarioActual.setNivel(3);
+        //usuarioActual.setNivel(3);
         leerAchivo();
         launch();
     }

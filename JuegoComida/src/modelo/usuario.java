@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package modelo;
 
 import java.util.ArrayList;
@@ -17,7 +12,7 @@ public class Usuario {
     private String nUsuario;
     private int nivel=1;
     private int score=0;
-    private int vida=4;
+    private int vida=5;
     private static List<Usuario> usuarios = new ArrayList<>();
 
     public Usuario(String nUsuario) {
@@ -54,6 +49,18 @@ public class Usuario {
 
     public void setVida(int vida) {
         this.vida = vida;
+    }
+    
+    public void subirNivel(){
+        this.nivel+=1;
+    }
+    
+    public void subirScore(){
+        this.score+=100;
+    }
+    
+    public void pederVida(){
+        this.vida-=1;
     }
 
     public static List<Usuario> getUsuarios() {

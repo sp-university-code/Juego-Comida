@@ -67,11 +67,5 @@ public class Comida {
         return "Comida{" + "nombre=" + nombre + ", nombreArchivo=" + nombreArchivo + '}';
     }
     
-    
-    
-    
-    
-    
-    
-    
+ 
 }
