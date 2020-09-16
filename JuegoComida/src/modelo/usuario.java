@@ -1,5 +1,6 @@
 package modelo;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -8,7 +9,7 @@ import java.util.Objects;
  *
  * @author Jorge
  */
-public class Usuario {
+public class Usuario implements Serializable{
     private String nUsuario;
     private int nivel=1;
     private int score=0;

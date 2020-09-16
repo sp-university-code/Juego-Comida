@@ -2,6 +2,10 @@
  * Empty Stylesheet file.
  */
 
-.mainFxmlClass {
+#pedidos{ 
+    -fx-background-image: url('/recursos/PedidosDer.png');
+}
 
+#fondo{ 
+    -fx-background-image: url('/recursos/FondoJuego.png');
 }

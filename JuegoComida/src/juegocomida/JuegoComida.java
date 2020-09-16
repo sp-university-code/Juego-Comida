@@ -1,9 +1,15 @@
 package juegocomida;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.ConcurrentModificationException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.logging.Level;
@@ -26,9 +32,8 @@ public class JuegoComida extends Application{
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args){ 
-        usuarioActual=new Usuario("jazch");
-        //usuarioActual.setNivel(3);
+    public static void main(String[] args){
+        deserealizar("usuarios");
         leerAchivo();
         launch();
     }
@@ -42,7 +47,10 @@ public class JuegoComida extends Application{
         stage.setTitle("Cooking Craze");
         stage.setResizable(false);
         stage.show();
-        stage.setOnCloseRequest(e -> terminarRun());
+        stage.setOnCloseRequest(e -> {
+            serializar("usuarios");
+            terminarRun();
+            });
     }
     
     public static void terminarRun(){
@@ -64,5 +72,60 @@ public class JuegoComida extends Application{
         } catch (IOException ex) {
             Logger.getLogger(JuegoComida.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+    
+    public static void cargarUsuario(String nick){
+        if(Usuario.getUsuarios().size()>0){
+            try{
+                for(Usuario u : Usuario.getUsuarios()){
+                    if(u.equals(new Usuario(nick))){
+                        usuarioActual=u;
+                        break;
+                    }
+                    else{
+                        usuarioActual = new Usuario(nick); 
+                    }
+                }
+                if(!Usuario.getUsuarios().contains(new Usuario(nick))){
+                    Usuario.getUsuarios().add(new Usuario(nick));
+                }
+            }
+            catch(ConcurrentModificationException e){
+                System.out.println(e);
+            }
+        }
+        else{
+            usuarioActual = new Usuario(nick);
+            Usuario.getUsuarios().add(new Usuario(nick));
+        }
+    }
+    
+    public static void serializar(String nombrearchivo){
+        try(ObjectOutputStream os = new ObjectOutputStream(new FileOutputStream("src/recursos/"+nombrearchivo+".dat"));) {
+                os.writeObject(Usuario.getUsuarios());
+        }
+        catch (FileNotFoundException ex) {
+            System.out.println(ex);
+        }
+        catch (IOException ex) {
+               System.out.println(ex);
+        }
+    }
+    
+    public static void deserealizar(String nombrearchivo){
+        try(ObjectInputStream is = new ObjectInputStream(new FileInputStream("src/recursos/"+nombrearchivo+".dat"));) {
+                //productos= (ArrayList<Producto>)is.readObject();
+                Usuario.setUsuarios((List<Usuario>)is.readObject());
+                System.out.println("Proceso de deserializacion culminado con exito");
+        } catch (FileNotFoundException ex) {
+            System.out.println("Aun no se ha serializado la lista!");
+        }
+        catch (IOException ex) {
+            System.out.println(ex);
+        }
+        catch (ClassNotFoundException ex) {
+               System.out.println(ex);
+            }
+        
     }
 }
